@@ -1,4 +1,4 @@
-# cantrackvote
+# CanTrackVote
 
 CanTrackVote is a cross platform mobile application built to facilitate engagement in Canadian federal politics. The app will allow you to get up to date information on votes by Canadian members of parliament as they happen, in a format that’s easy to understand to a layperson. The app will be free and require as little user data as possible. The focus for development will be on bug free, effective and robust features. This means trimming as many extraneous or buggy features altogether until a more robust solution can be developed. 
 
