@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, Button,Alert } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import ActivityFeed from './ActivityFeed';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <ActivityFeed />
+      <ActivityFeed></ActivityFeed>
     </View>
   );
 }
@@ -12,6 +13,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
