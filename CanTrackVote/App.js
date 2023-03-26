@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import ActivityFeed from './ActivityFeed';
+import ActivityFeed from './Screens/ActivityFeed'
+import MPInfoCard from './Screens/MPInfoCard';
+import BillInfoCard from './Screens/BillInfoCard';
 
 export default function App() {
   return (
