@@ -1,22 +1,26 @@
 import React from 'react';
+import 'react-native-gesture-handler';
 import { StyleSheet, Text, View } from 'react-native';
-import ActivityFeed from './Screens/ActivityFeed'
-import MPInfoCard from './Screens/MPInfoCard';
-import BillInfoCard from './Screens/BillInfoCard';
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+import 'react-native-gesture-handler';
+import ActivityFeedScreen from './Screens/ActivityFeedScreen'
+import MPInfoCardScreen from './Screens/MPInfoCardScreen';
+import BillInfoCardScreen from './Screens/BillInfoCardScreen';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <ActivityFeed></ActivityFeed>
-    </View>
-  );
-}
+const navigator = createStackNavigator(
+{
+  ActivityFeed: ActivityFeedScreen,
+  BillInfoCard: BillInfoCardScreen,
+  MPInfoCard: MPInfoCardScreen,
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+},
+{
+  initialRouteName: "ActivityFeed",
+  defaultNavigationOptions: {
+    title: "CanTrackVote",
   },
-});
+}
+);
+
+export default createAppContainer(navigator);

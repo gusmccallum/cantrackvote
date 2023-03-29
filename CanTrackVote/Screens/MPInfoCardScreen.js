@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import MPInfoCardTop from '../Components/MPInfoCardTop';
 import MPInfoCardBottom from '../Components/MPInfoCardBottom';
 
-const MPInfoCard = () => {
+const MPInfoCardScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -37,4 +37,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MPInfoCard;
+export default MPInfoCardScreen;

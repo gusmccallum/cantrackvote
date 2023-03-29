@@ -5,7 +5,7 @@ import MPList from '../assets/MPList.json'
 import mp from '../assets/mp.png'
 import ParsingService from '../Services/ParsingService';
 
-const ActivityFeed = () => {
+const ActivityFeedScreen = () => {
   const [votes, setVotes] = useState([]);
 
   useEffect(() => {
@@ -49,4 +49,4 @@ const ActivityFeed = () => {
   );
 };
 
-export default ActivityFeed;
+export default ActivityFeedScreen;

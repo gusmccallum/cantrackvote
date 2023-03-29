@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import BillInfoCardTop from '../Components/BillInfoCardTop';
 import BillInfoCardBottom from '../Components/BillInfoCardBottom';
 
-const BillInfoCard = () => {
+const BillInfoCardScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -37,4 +37,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BillInfoCard;
+export default BillInfoCardScreen;
