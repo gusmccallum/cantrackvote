@@ -1,19 +1,40 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+class Subscription {
+  constructor(mp = [], bill = [], issue = []) {
+    this.MPs = mp;
+    this.Bills = bill;
+    this.Issues = issue;
+  }
 
-const Subscription = ({ subscription }) => {
-  console.log("This is the subscritpion" + subscription); // log the subscription prop to the console
-  const { MPs, Bills, Issues } = subscription;
+  addMP(name) {
+    this.MPs.push(name);
+  }
 
+  addBill(title) {
+    this.Bills.push(title);
+  }
 
-  return (
-    <View>
-      <Text>Subscription Component</Text>
-      <Text>MPs: {MPs.join(', ')}</Text>
-      <Text>Bills: {Bills.join(', ')}</Text>
-      <Text>Issues: {Issues.join(', ')}</Text>
-    </View>
-  );
-};
+  addIssue(name) {
+    this.Issues.push(name);
+  }
 
-export default Subscription;
+  removeMP(name) {
+    const index = this.MPs.indexOf(name);
+    if (index !== -1) {
+      this.MPs.splice(index, 1);
+    }
+  }
+
+  removeBill(title) {
+    const index = this.Bills.indexOf(title);
+    if (index !== -1) {
+      this.Bills.splice(index, 1);
+    }
+  }
+
+  removeIssue(name) {
+    const index = this.Issues.indexOf(name);
+    if (index !== -1) {
+      this.Issues.splice(index, 1);
+    }
+  }
+}

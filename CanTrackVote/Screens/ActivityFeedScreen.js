@@ -1,49 +1,88 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image } from 'react-native';
-import { v4 as uuidv4 } from 'uuid';
-import MPList from '../assets/MPList.json'
-import mp from '../assets/mp.png'
+import { View, FlatList } from 'react-native';
+import uuid from 'uuid-random';
+import { useNavigation } from '@react-navigation/native';
+import MPList from '../assets/MPList.json';
 import ParsingService from '../Services/ParsingService';
+import MPActivityFeedItem from '../Components/MPActivityFeedItem';
+import BillActivityFeedItem from '../Components/BillActivityFeedItem';
+import bill from '../assets/bill.png';
 
 const ActivityFeedScreen = () => {
-  const [votes, setVotes] = useState([]);
+  const navigation = useNavigation();
+
+  const [mpActivities, setMpActivities] = useState([]);
+  const [billActivities, setBillActivities] = useState([]);
+  const [activities, setActivities] = useState([]);
 
   useEffect(() => {
-    try {
-      ParsingService.getVotes(MPList[0].name, MPList[0].ID, 5)
-        .then(response => {
-          console.log('The votes are: ', response.voteResults);
-          setVotes(response);
-        })
-        .catch(error => {
-          console.log('activity feed error1: ', error);
-        });
-    } catch (error) {
-      console.log('activity feed error2: ', error);
-    }
+    const fetchData = async () => {
+      try {
+        const mpVotes = await ParsingService.getRecentMpVotes(
+          MPList[0].name,
+          MPList[0].ID,
+          10
+        );
+        const billVotes = await ParsingService.getRecentBillVotes(11, 3);
+        setMpActivities(mpVotes);
+        setBillActivities(billVotes);
+      } catch (error) {
+        console.log('activity feed error: ', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const renderItem = ({ item }) => (
-    <View style={{ padding: 10, flexDirection: 'row', alignItems: 'center' }}>
-      <Image
-        source={{ uri: votes.image }}
-        style={{ width: 100, height: 100, borderRadius: 50 }}
-      />
-      <View style={{ marginLeft: 10 }}>
-        <Text style={{ fontWeight: 'bold' }}>{MPList[0].name}</Text>
-        <Text style={{ fontWeight: 'bold' }}>{item.billTitle}{item.description}</Text>
-        <Text>{item.memberVote}</Text>
-        <Text>{item.date}</Text>
-      </View>
-    </View>
-  );
+  useEffect(() => {
+    const allActivities = [...mpActivities, ...billActivities];
+    allActivities.sort((a, b) => new Date(b.date) - new Date(a.date));
+    setActivities(allActivities);
+  }, [mpActivities, billActivities]);
+
+  const handleMPPress = (vote) => {
+    navigation.navigate('MPInfoCard', { vote });
+  };
+
+  const handleBillPress = (vote) => {
+    navigation.navigate('BillInfoCard', { vote });
+  };
+
+  const renderItem = ({ item }) => {
+    if (item.memberVote !== undefined) {
+      return (
+        <MPActivityFeedItem
+          image={item.image}
+          name={MPList[0].name}
+          billTitle={item.billTitle}
+          description={item.description}
+          memberVote={item.memberVote}
+          date={item.date}
+          onPressMp={() => handleMPPress(item)}
+        />
+      );
+    } else {
+      return (
+        <BillActivityFeedItem
+          image={bill}
+          billNumber={item.billNumber}
+          voteStage={item.voteStage}
+          voteStatus={item.voteStatus}
+          votesYes={item.votesYes}
+          votesNo={item.votesNo}
+          date={item.date}
+          onPressBill={() => handleBillPress(item)}
+        />
+      );
+    }
+  };
 
   return (
     <View style={{ flex: 1, padding: 10 }}>
       <FlatList
-        data={votes.voteResults}
+        data={activities}
         renderItem={renderItem}
-        keyExtractor={() => uuidv4}
+        keyExtractor={() => uuid()}
       />
     </View>
   );

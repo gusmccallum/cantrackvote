@@ -1,77 +1,36 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 
-const MPActivityFeedItem = ({ imageUri, title, description, voteResult }) => {
+const MPActivityFeedItem = ({
+  image,
+  name,
+  billTitle,
+  description,
+  memberVote,
+  date,
+  onPressMp,
+}) => {
+  const voteColor = memberVote === 'Yea' ? 'green' : 'red';
+  const voteIcon = memberVote === 'Yea' ? 'check' : 'times';
+
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: imageUri }} />
-      <View style={styles.detailsContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
-        <View style={styles.voteResultContainer}>
-          <Text style={[styles.voteResult, voteResult === 'Yes' ? styles.yesVote : styles.noVote]}>
-            {voteResult}
-          </Text>
+    <TouchableOpacity onPress={onPressMp}>
+      <View style={{ padding: 10, flexDirection: 'row', alignItems: 'center' }}>
+        <Image source={{ uri: image }} style={{ width: 50, height: 50, borderRadius: 25 }} />
+        <View style={{ marginLeft: 10, flex: 1 }}>
+          <Text style={{ fontWeight: 'bold' }}>{name}</Text>
+          <Text style={{ fontWeight: 'bold' }}>{billTitle}</Text>
+          <Text>{description}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
+            <FontAwesome name={voteIcon} size={20} color={voteColor} />
+            <Text style={{ marginLeft: 5, color: voteColor }}>{memberVote === 'Yea' ? 'Yes' : 'No'}</Text>
+            <Text style={{ marginLeft: 10 }}>{date}</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    overflow: 'hidden',
-    marginHorizontal: 20,
-    marginVertical: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
-  },
-  image: {
-    width: 70,
-    height: 70,
-  },
-  detailsContainer: {
-    flex: 1,
-    padding: 10,
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  description: {
-    fontSize: 14,
-    marginBottom: 5,
-  },
-  voteResultContainer: {
-    alignSelf: 'flex-end',
-    borderRadius: 20,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-  },
-  voteResult: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-  },
-  yesVote: {
-    backgroundColor: 'green',
-    color: '#fff',
-  },
-  noVote: {
-    backgroundColor: 'red',
-    color: '#fff',
-  },
-});
 
 export default MPActivityFeedItem;
