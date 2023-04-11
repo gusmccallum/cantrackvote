@@ -5,6 +5,7 @@ import 'react-native-gesture-handler';
 import ActivityFeedScreen from './Screens/ActivityFeedScreen'
 import MPInfoCardScreen from './Screens/MPInfoCardScreen';
 import BillInfoCardScreen from './Screens/BillInfoCardScreen';
+import FindMyMpScreen from "./Screens/FindMyMpScreen";
 
 const Stack = createStackNavigator();
 
@@ -12,9 +13,8 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="ActivityFeed" component={ActivityFeedScreen} />
-        <Stack.Screen name="MPInfoCard" component={MPInfoCardScreen} />
-        <Stack.Screen name="BillInfoCard" component={BillInfoCardScreen} />
+        <Stack.Screen name="FindMyMp" component={FindMyMpScreen} />
+
       </Stack.Navigator>
     </NavigationContainer>
   )
