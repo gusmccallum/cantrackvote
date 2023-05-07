@@ -1,7 +1,18 @@
 import axios from 'axios';
 import { parseString } from 'react-native-xml2js/lib/parser';
 
+function getLongLat(address) {
+  const encodedAddress = encodeURIComponent(address);
 
+  const url = `https://geocode.maps.co/search?q=${encodedAddress}`;
+  axios.get(url).then(
+      response => {
+        console.log('RESPONSE: ' + response);
+        console.log('RESPONSE.DATA: ' + response.data);
+        return response;
+      }
+  ).catch(e => { console.log(' apiservice error:' + e)});
+}
 async function getMpVotes(mpName, mpID) {
   const nameArr = mpName.split(/[\s']+/, 2).reverse();
   const lastNameFirstName = nameArr.join('');
@@ -74,5 +85,6 @@ function getBillsByIssue(issueName) {
 module.exports = {
   getMpVotes,
   getBillInfo,
-  getBillsByIssue
+  getBillsByIssue,
+  getLongLat
 };

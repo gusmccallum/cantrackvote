@@ -1,17 +1,20 @@
 import {useState} from 'react';
 
 import { StyleSheet, View, Text, TextInput, SafeAreaView } from 'react-native';
+import MpMap from "../Components/MpMap";
+import MapView from "react-native-maps";
+import MapTextInput from "../Components/MapTextInput";
 const FindMyMpScreen = ({name, id}) => {
-    const [long, setLong] = useState(-75.6981200);
-    const [lat, setLat] = useState(45.4111700);
+
     return (
-
         <SafeAreaView style={styles.container}>
+            <View style={styles.inputContainer}>
+                <MapTextInput/>
 
-            <MapView style={styles.map} />
-            <View>
-                <TextInput autoFocus={true} placeholder={'Enter Address or Postal Code.'}/>
             </View>
+            <MpMap/>
+
+
         </SafeAreaView>
     )
 };
@@ -20,14 +23,12 @@ export default FindMyMpScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "column",
-        justifyContent: 'center',
-        alignItems: 'center'
+        width: '100%',
+        height: '100%',
     },
-    map: {
-        width: '95%',
-        height: '60%',
-        borderRadius: 5
+    inputContainer: {
+        marginTop: 12,
+        flexDirection: 'column'
+    }
 
-    },
 });
