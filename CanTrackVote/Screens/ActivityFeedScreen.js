@@ -1,19 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList } from 'react-native';
+import {
+  View,
+  FlatList,
+  Modal,
+  StyleSheet,
+  Button,
+  TouchableOpacity,
+  Text,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import uuid from 'uuid-random';
-import { useNavigation } from '@react-navigation/native';
 import MPList from '../assets/MPList.json';
 import ParsingService from '../Services/ParsingService';
 import MPActivityFeedItem from '../Components/MPActivityFeedItem';
 import BillActivityFeedItem from '../Components/BillActivityFeedItem';
 import bill from '../assets/bill.png';
+import { useRoute, useNavigation } from '@react-navigation/native';
+
 
 const ActivityFeedScreen = () => {
-  const navigation = useNavigation();
+  const route = useRoute();
+const navigation = useNavigation();
+
 
   const [mpActivities, setMpActivities] = useState([]);
   const [billActivities, setBillActivities] = useState([]);
   const [activities, setActivities] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [showMPActivities, setShowMPActivities] = useState(true);
+  const [showBillActivities, setShowBillActivities] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,15 +56,15 @@ const ActivityFeedScreen = () => {
   }, [mpActivities, billActivities]);
 
   const handleMPPress = (vote) => {
-    navigation.navigate('MPInfoCardStack', { vote });
+    navigation.navigate('MPInfoCardScreen', { vote, ...route.params });
   };
 
   const handleBillPress = (vote) => {
-    navigation.navigate('BillInfoCardStack', { vote });
+    navigation.navigate('BillInfoCardScreenTab', { vote });
   };
 
   const renderItem = ({ item }) => {
-    if (item.memberVote !== undefined) {
+    if (item.memberVote !== undefined && showMPActivities) {
       return (
         <MPActivityFeedItem
           image={item.image}
@@ -61,6 +76,8 @@ const ActivityFeedScreen = () => {
           onPressMp={() => handleMPPress(item)}
         />
       );
+    } else if (!showBillActivities) {
+      return null;
     } else {
       return (
         <BillActivityFeedItem
@@ -77,15 +94,84 @@ const ActivityFeedScreen = () => {
     }
   };
 
+  const setShowMPActivitiesHandler = () => {
+    setShowMPActivities(!showMPActivities);
+  };
+
+  const setShowBillActivitiesHandler = () => {
+    setShowBillActivities(!showBillActivities);
+  };
+
   return (
-    <View style={{ flex: 1, padding: 10 }}>
-      <FlatList
-        data={activities}
-        renderItem={renderItem}
-        keyExtractor={() => uuid()}
-      />
-    </View>
-  );
+    <TouchableWithoutFeedback onPress={() => setShowModal(false)}>
+      <View style={{ flex: 1, padding: 10 }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginBottom: 10,
+          }}
+        >
+          <Button title="Filter" onPress={() => setShowModal(true)} />
+        </View>
+<FlatList
+data={activities}
+renderItem={renderItem}
+keyExtractor={() => uuid()}
+/>
+<Modal
+animationType="fade"
+visible={showModal}
+transparent={true}
+onRequestClose={() => setShowModal(false)}
+>
+<TouchableWithoutFeedback onPress={() => setShowModal(false)}>
+<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+<View
+style={{ backgroundColor: "#3f7819", padding: 20, borderRadius: 10 }}
+>
+<TouchableOpacity
+style={
+showMPActivities
+? styles.filterButtonActive
+: styles.filterButton
+}
+onPress={() => setShowMPActivitiesHandler()}
+>
+<Text>MPs</Text>
+</TouchableOpacity>
+<TouchableOpacity
+style={
+showBillActivities
+? styles.filterButtonActive
+: styles.filterButton
+}
+onPress={() => setShowBillActivitiesHandler()}
+>
+<Text>Bills</Text>
+</TouchableOpacity>
+</View>
+</View>
+</TouchableWithoutFeedback>
+</Modal>
+</View>
+</TouchableWithoutFeedback>
+);
 };
+
+const styles = StyleSheet.create({
+filterButton: {
+backgroundColor: '#ff9292',
+padding: 20,
+borderRadius: 10,
+marginRight: 10,
+},
+filterButtonActive: {
+backgroundColor: '#9fff92',
+padding: 20,
+borderRadius: 10,
+marginRight: 10,
+},
+});
 
 export default ActivityFeedScreen;
