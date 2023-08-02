@@ -12,21 +12,22 @@ import UserScreen from "../Screens/UserScreen";
 
 const Stack = createStackNavigator();
 
-const HomeStackNavigator = () => {
+const StackNavigator = () => {
   return (
-    <Stack.Navigator options={{ headerShown: false }}>
+    <Stack.Navigator options={{ headerShown: false }}
+    initialRouteName={initialScreen}>
       <Stack.Screen
-        name="ActivityFeedStack"
+        name="ActivityFeed"
         component={ActivityFeedScreen}
       />
 
       <Stack.Screen
-        name="MPInfoCardStack"
+        name="MPInfoCard"
         component={MPInfoCardScreen}
       />
 
       <Stack.Screen
-        name="BillInfoCardStack"
+        name="BillInfoCard"
         component={BillInfoCardScreen}
       />
 
@@ -36,175 +37,33 @@ const HomeStackNavigator = () => {
       />
 
       <Stack.Screen
-        name="IssuesStack"
+        name="Issues"
         component={IssuesScreen}
       />
 
       <Stack.Screen
-        name="InfoStack"
+        name="Info"
         component={InfoScreen}
       />    
 
       <Stack.Screen
-        name="FindmyMPStack"
+        name="FindmyMP"
         component={FindmyMPScreen}
       />    
 
 
       <Stack.Screen
-        name="SettingsStack"
+        name="Settings"
         component={SettingsScreen}
       />    
       
       <Stack.Screen
-        name="UserStack"
+        name="User"
         component={UserScreen}
       />    
     </Stack.Navigator>
   );
 };
 
-const SearchStackNavigator = () => {
-  return (
-    <Stack.Navigator options={{ headerShown: false }}>
-      <Stack.Screen
-        name="SearchStack"
-        component={SearchScreen}
-      />
 
-      <Stack.Screen
-        name="ActivityFeedStack"
-        component={ActivityFeedScreen}
-      />
-
-      <Stack.Screen
-        name="MPInfoCardStack"
-        component={MPInfoCardScreen}
-      />
-
-      <Stack.Screen
-        name="BillInfoCardStack"
-        component={BillInfoCardScreen}
-      />
-
-      <Stack.Screen
-        name="IssuesStack"
-        component={IssuesScreen}
-      />
-
-      <Stack.Screen
-        name="InfoStack"
-        component={InfoScreen}
-      />    
-
-      <Stack.Screen
-        name="FindmyMPStack"
-        component={FindmyMPScreen}
-      />    
-
-
-      <Stack.Screen
-        name="SettingsStack"
-        component={SettingsScreen}
-      />    
-      
-      <Stack.Screen
-        name="UserStack"
-        component={UserScreen}
-      />       
-    </Stack.Navigator>
-  );
-};
-
-const IssuesStackNavigator = () => {
-  return (
-    <Stack.Navigator options={{ headerShown: false }} >
-      <Stack.Screen name="IssuesStack" 
-      component={IssuesScreen}/>
-
-      <Stack.Screen
-        name="ActivityFeedStack"
-        component={ActivityFeedScreen}/>
-
-      <Stack.Screen
-        name="MPInfoCardStack"
-        component={MPInfoCardScreen}/>
-
-      <Stack.Screen
-        name="BillInfoCardStack"
-        component={BillInfoCardScreen}/>
-
-      <Stack.Screen name="SearchStack" 
-      component={SearchScreen} />
-
-      <Stack.Screen
-        name="InfoStack"
-        component={InfoScreen}
-      />    
-
-      <Stack.Screen
-        name="FindmyMPStack"
-        component={FindmyMPScreen}
-      />    
-
-      <Stack.Screen
-        name="SettingsStack"
-        component={SettingsScreen}
-      />    
-      
-      <Stack.Screen
-        name="UserStack"
-        component={UserScreen}
-      /> 
-    </Stack.Navigator>
-  );
-};
-
-const UserStackNavigator = () => {
-  return (
-    <Stack.Navigator options={{ headerShown: false }}>
-
-      <Stack.Screen
-        name="ActivityFeedStack"
-        component={ActivityFeedScreen}/>
-
-      <Stack.Screen
-        name="MPInfoCardStack"
-        component={MPInfoCardScreen}/>
-
-      <Stack.Screen
-        name="BillInfoCardStack"
-        component={BillInfoCardScreen}/>
-
-      <Stack.Screen name="SearchStack" 
-        component={SearchScreen} />
-
-      <Stack.Screen name="IssuesStack" 
-        component={IssuesScreen}/>   
-
-      <Stack.Screen
-        name="InfoStack"
-        component={InfoScreen}
-      />    
-
-      <Stack.Screen
-        name="FindmyMPStack"
-        component={FindmyMPScreen}
-      />    
-
-
-      <Stack.Screen
-        name="SettingsStack"
-        component={SettingsScreen}
-      />    
-      
-      <Stack.Screen
-        name="UserStack"
-        component={UserScreen}
-      /> 
-
-    </Stack.Navigator>
-  );
-};
-
-export { HomeStackNavigator, SearchStackNavigator, IssuesStackNavigator, UserStackNavigator };
+export default StackNavigator;
