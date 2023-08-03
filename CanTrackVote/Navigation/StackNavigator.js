@@ -6,13 +6,13 @@ import BillInfoCardScreen from "../Screens/BillInfoCardScreen";
 import SearchScreen from "../Screens/SearchScreen";
 import IssuesScreen from "../Screens/IssuesScreen";
 import InfoScreen from "../Screens/InfoScreen";
-import FindmyMPScreen from "../Screens/FindMyMPScreen";
+import FindmyMPScreen from "../Screens/FindmyMPScreen";
 import SettingsScreen from "../Screens/SettingsScreen";
 import UserScreen from "../Screens/UserScreen";
 
 const Stack = createStackNavigator();
 
-const StackNavigator = () => {
+const StackNavigator = ( { initialScreen } ) => {
   return (
     <Stack.Navigator options={{ headerShown: false }}
     initialRouteName={initialScreen}>

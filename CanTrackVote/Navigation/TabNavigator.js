@@ -8,6 +8,7 @@ import SearchScreen from "../Screens/SearchScreen";
 import IssuesScreen from "../Screens/IssuesScreen";
 import MPInfoCardScreen from "../Screens/MPInfoCardScreen";
 import UserScreen from "../Screens/UserScreen";
+import StackNavigator from "./StackNavigator";
 
 
 const Tab = createBottomTabNavigator();
@@ -35,47 +36,51 @@ const TabNavigator = () => {
     }}>
       <Tab.Screen 
         name="ActivityFeedScreen" 
-        component={ActivityFeedScreen} 
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
         }}
-      />
+      >
+        {() => <StackNavigator initialScreen="ActivityFeed"/>}
+        </Tab.Screen>
       <Tab.Screen 
         name="SearchScreen" 
-        component={SearchScreen} 
         options={{
           tabBarLabel: 'Search',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="magnify" color={color} size={size} />
           ),
         }}
-      />
+      >
+        {() => <StackNavigator initialScreen="Search"/>}
+        </Tab.Screen>
         <Tab.Screen 
         name="IssuesScreen" 
-        component={IssuesScreen} 
         options={{
           tabBarLabel: 'Issues',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="sphere" color={color} size={size} />
           ),
         }}
-      />
+      > 
+      {() => <StackNavigator initialScreen="Issues"/>}
+      </Tab.Screen>
       <Tab.Screen 
         name="UserScreen" 
-        component={UserScreen} 
         options={{
           tabBarLabel: 'More',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />
           )
         }}
-      />
+      > 
+      {() => <StackNavigator initialScreen="User"/>}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 };
 
 
-export { TabNavigator };
+export default TabNavigator;

@@ -56,7 +56,7 @@ const navigation = useNavigation();
   }, [mpActivities, billActivities]);
 
   const handleMPPress = (vote) => {
-    navigation.navigate('MPInfoCardScreen', { vote, ...route.params });
+    navigation.navigate('MPInfoCard', { vote, ...route.params });
   };
 
   const handleBillPress = (vote) => {
