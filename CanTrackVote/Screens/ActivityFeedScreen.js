@@ -17,11 +17,8 @@ import BillActivityFeedItem from '../Components/BillActivityFeedItem';
 import bill from '../assets/bill.png';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
-
-const ActivityFeedScreen = () => {
-  const route = useRoute();
-const navigation = useNavigation();
-
+ 
+const ActivityFeedScreen = ( { navigation } ) => {
 
   const [mpActivities, setMpActivities] = useState([]);
   const [billActivities, setBillActivities] = useState([]);
@@ -56,11 +53,13 @@ const navigation = useNavigation();
   }, [mpActivities, billActivities]);
 
   const handleMPPress = (vote) => {
-    navigation.navigate('MPInfoCard', { vote, ...route.params });
+    console.log(item);
+    navigation.navigate('MPInfoCard', { vote });
   };
 
   const handleBillPress = (vote) => {
-    navigation.navigate('BillInfoCardScreenTab', { vote });
+    console.log(item);
+    navigation.navigate('BillInfoCard', { vote });
   };
 
   const renderItem = ({ item }) => {

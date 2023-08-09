@@ -3,9 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import MPInfoCardTop from '../Components/MPInfoCardTop';
 import MPInfoCardBottom from '../Components/MPInfoCardBottom';
 
-const MPInfoCardScreen = ({ route }) => {
-  const { vote } = route.params;
-
+const MPInfoCardScreen = ({ vote }) => {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>

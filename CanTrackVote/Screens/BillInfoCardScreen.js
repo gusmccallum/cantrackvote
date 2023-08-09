@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import BillInfoCardTop from '../Components/BillInfoCardTop';
 import BillInfoCardBottom from '../Components/BillInfoCardBottom';
 
-const BillInfoCardScreen = () => {
+const BillInfoCardScreen = ( { vote }) => {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
