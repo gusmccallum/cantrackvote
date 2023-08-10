@@ -53,12 +53,12 @@ const ActivityFeedScreen = ( { navigation } ) => {
   }, [mpActivities, billActivities]);
 
   const handleMPPress = (vote) => {
-    console.log(item);
+    console.log(vote);
     navigation.navigate('MPInfoCard', { vote });
   };
 
   const handleBillPress = (vote) => {
-    console.log(item);
+    console.log(vote.billNumber);
     navigation.navigate('BillInfoCard', { vote });
   };
 

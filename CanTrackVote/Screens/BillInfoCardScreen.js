@@ -1,18 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import BillInfoCardTop from '../Components/BillInfoCardTop';
 import BillInfoCardBottom from '../Components/BillInfoCardBottom';
+import ParsingService from '../Services/ParsingService';
 
-const BillInfoCardScreen = ( { vote }) => {
+const BillInfoCardScreen = ({ vote }) => {
+  const [billDetails, setBillDetails] = useState(null); // State to hold bill details
+
+   useEffect(() => {
+    const billNumber = vote.billNumber;
+    const fetchData = async () => {
+      try {
+        const billDetails = await ParsingService.getDetailedBillVotes(billNumber);
+        setBillDetails(billDetails);        
+      } catch (error) {
+        console.log('bill info card screen error: ', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <BillInfoCardTop
-          imageUri="https://bills-to-laws.weebly.com/uploads/5/0/9/7/50973845/3713462_orig.png"
-          name="Bill C-123"
-          party="Sponsored by the Liberal Party of Canada"
-          description="An Act to amend the Criminal Code and the Immigration and Refugee Protection Act (trafficking in human organs)."
-        />
+        {billDetails && (
+          <BillInfoCardTop
+            imageUri={billDetails.imageUri}
+            name={billDetails.name}
+            party={billDetails.party}
+            description={billDetails.description}
+          />
+        )}
       </View>
       <View style={styles.bottomContainer}>
         <BillInfoCardBottom />
