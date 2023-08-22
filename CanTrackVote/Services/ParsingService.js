@@ -43,8 +43,27 @@ async function getRecentBillVotes(billNumber, number) {
   return recentVotes;
 }
 
+async function getDetailedBillVotes(billNumber) {
+  const billInfo = await ApiService.getBillInfo(billNumber);
+  const houseVoteDetails = billInfo[0].HouseVoteDetails;
+
+  const recentVotes = houseVoteDetails.slice(-number).map(vote => {
+    return {
+      billNumber: billNumber,
+      voteStage: vote.DivisionSubjectEn,
+      voteStatus: vote.DecisionResultNameEn,
+      votesYes: vote.DivisionVotesYeas,
+      votesNo: vote.DivisionVotesNays,
+      date: vote.DecisionDateTime
+    };
+  });
+
+  return recentVotes;
+}
+
 
 module.exports = {
   getRecentMpVotes,
-  getRecentBillVotes
+  getRecentBillVotes, 
+  getDetailedBillVotes
 }
