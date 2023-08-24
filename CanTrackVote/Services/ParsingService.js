@@ -1,4 +1,5 @@
 import ApiService from './ApiService';
+import MPList from '../assets/MPList.json';
 
 async function getRecentMpVotes(name, id, number) {
   const response = await ApiService.getMpVotes(name, id);
@@ -46,6 +47,7 @@ async function getRecentBillVotes(billNumber, number) {
 async function getDetailedBillVotes(billNumber) {
   const billInfo = await ApiService.getBillInfo(billNumber);
   const houseVoteDetails = billInfo[0].HouseVoteDetails;
+  const party = getPartyByName(billInfo[0].SponsorPersonName);
 
   const recentVotes = houseVoteDetails.slice(-number).map(vote => {
     return {
@@ -61,9 +63,27 @@ async function getDetailedBillVotes(billNumber) {
   return recentVotes;
 }
 
+function getPartyByName(mpName) {
+  for (const mp of MPList) {
+    if (mp.name === mpName) {
+      return mp.party;
+    }
+  } return null;
+}
+
+function getPartyByID(mpID) {
+  for (const mp of MPList) {
+    if (mp.ID === mpID) {
+      return mp.party;
+    }
+  } return null;
+}
+
 
 module.exports = {
   getRecentMpVotes,
   getRecentBillVotes, 
-  getDetailedBillVotes
+  getDetailedBillVotes,
+  getPartyByName,
+  getPartyByID
 }
