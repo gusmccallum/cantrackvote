@@ -3,10 +3,10 @@ import { View, Image, Text, StyleSheet, Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
-const BillInfoCardTop = ({ name, party, description, imageUri }) => {
+const BillInfoCardTop = ({ name, party, description, image }) => {
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: imageUri }} />
+      <Image style={styles.image} source={ image } />
       <View style={styles.detailsContainer}>
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.party}>{party}</Text>

@@ -26,7 +26,7 @@ const BillInfoCardScreen = ({ vote }) => {
       <View style={styles.topContainer}>
         {billDetails && (
           <BillInfoCardTop
-            imageUri={billDetails.imageUri}
+            image={billDetails.image}
             name={billDetails.name}
             party={billDetails.party}
             description={billDetails.description}

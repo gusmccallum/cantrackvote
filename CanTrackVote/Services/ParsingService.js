@@ -1,5 +1,11 @@
 import ApiService from './ApiService';
 import MPList from '../assets/MPList.json';
+import NDPBill from '../assets/bill_ndp.png';
+import LibBill from '../assets/bill_lib.png';
+import ConBill from '../assets/bill_con.png';
+import BlocBill from '../assets/bill_bloc.png';
+import GreenBill from '../assets/bill_green.png';
+import DefaultBill from '../assets/bill.png';
 
 async function getRecentMpVotes(name, id, number) {
   const response = await ApiService.getMpVotes(name, id);
@@ -49,9 +55,30 @@ async function getDetailedBillVotes(billNumber) {
   const houseVoteDetails = billInfo[0].HouseVoteDetails;
   const party = getPartyByName(billInfo[0].SponsorPersonName);
 
+  let img;
+
+  if (party === "Liberal") {
+    img = LibBill;
+  } else if (party === "NDP") {
+    img = NDPBill;
+  } else if (party === "Conservative") {
+    img = ConBill;
+  } else if (party === "Green Party") {
+    img = GreenBill;
+  } else if (party === "Bloc Québecois") {
+    img = BlocBill;
+  } else {
+    img = DefaultBill;
+  }
+
+
+
+
   const recentVotes = houseVoteDetails.slice(-number).map(vote => {
     return {
       billNumber: billNumber,
+      image: img,
+      party: party,
       voteStage: vote.DivisionSubjectEn,
       voteStatus: vote.DecisionResultNameEn,
       votesYes: vote.DivisionVotesYeas,
