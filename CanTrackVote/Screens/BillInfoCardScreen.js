@@ -4,15 +4,21 @@ import BillInfoCardTop from '../Components/BillInfoCardTop';
 import BillInfoCardBottom from '../Components/BillInfoCardBottom';
 import ParsingService from '../Services/ParsingService';
 
-const BillInfoCardScreen = ({ vote }) => {
+const BillInfoCardScreen = ({ route, navigation }) => {
   const [billDetails, setBillDetails] = useState(null); // State to hold bill details
+  const vote = route.params;
 
    useEffect(() => {
+    
     const billNumber = vote.billNumber;
     const fetchData = async () => {
       try {
         const billDetails = await ParsingService.getDetailedBillVotes(billNumber);
-        setBillDetails(billDetails);        
+        setBillDetails(billDetails);  
+/*         console.log("Bill image: ", billDetails.image);
+        console.log("Bill name: ", billDetails.name);
+        console.log("Bill party: ", billDetails.party);
+        console.log("Bill description: ", billDetails.description); */
       } catch (error) {
         console.log('bill info card screen error: ', error);
       }

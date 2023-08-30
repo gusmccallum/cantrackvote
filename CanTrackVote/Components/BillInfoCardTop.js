@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet, Dimensions } from 'react-native';
-
+import NDPBill from '../assets/bill_ndp.png';
 const { width } = Dimensions.get('window');
 
 const BillInfoCardTop = ({ name, party, description, image }) => {
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={ image } />
+      <Text>Test1</Text>
+      <Image style={styles.image} source={ NDPBill } />
+      <Text>Test2</Text>
       <View style={styles.detailsContainer}>
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.party}>{party}</Text>

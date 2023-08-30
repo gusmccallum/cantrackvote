@@ -58,8 +58,8 @@ const ActivityFeedScreen = ( { navigation } ) => {
   };
 
   const handleBillPress = (vote) => {
-    console.log(vote.billNumber);
-    navigation.navigate('BillInfoCard', { vote });
+    console.log("Bill number: ", vote.billNumber);
+    navigation.navigate('BillInfoCard', { vote: vote });
   };
 
   const renderItem = ({ item }) => {
