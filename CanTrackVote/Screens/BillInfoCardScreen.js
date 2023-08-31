@@ -6,11 +6,12 @@ import ParsingService from '../Services/ParsingService';
 
 const BillInfoCardScreen = ({ route, navigation }) => {
   const [billDetails, setBillDetails] = useState(null); // State to hold bill details
-  const vote = route.params;
+  const vote = route.params.vote;
 
    useEffect(() => {
     
     const billNumber = vote.billNumber;
+    
     const fetchData = async () => {
       try {
         const billDetails = await ParsingService.getDetailedBillVotes(billNumber);

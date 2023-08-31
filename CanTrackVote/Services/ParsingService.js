@@ -51,9 +51,10 @@ async function getRecentBillVotes(billNumber, number) {
 }
 
 async function getDetailedBillVotes(billNumber) {
-  const billInfo = await ApiService.getBillInfo(billNumber);
-  const houseVoteDetails = billInfo[0].HouseVoteDetails;
-  const party = getPartyByName(billInfo[0].SponsorPersonName);
+    const billInfo = await ApiService.getBillInfo(billNumber);
+    const houseVoteDetails = billInfo[0].HouseVoteDetails;
+    const party = getPartyByName(billInfo[0].SponsorPersonName);
+  
 
   let img;
 
@@ -71,10 +72,7 @@ async function getDetailedBillVotes(billNumber) {
     img = DefaultBill;
   }
 
-
-
-
-  const recentVotes = houseVoteDetails.slice(-number).map(vote => {
+  const recentVotes = houseVoteDetails.slice(3).map(vote => {
     return {
       billNumber: billNumber,
       image: img,
