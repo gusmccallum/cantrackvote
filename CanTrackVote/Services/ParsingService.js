@@ -59,29 +59,33 @@ async function getDetailedBillVotes(billNumber) {
   let img;
 
   if (party === "Liberal") {
-    img = LibBill;
+    img = require('../assets/bill_lib.png');
   } else if (party === "NDP") {
-    img = NDPBill;
+    img = require('../assets/bill_ndp.png');
   } else if (party === "Conservative") {
-    img = ConBill;
+    img = require('../assets/bill_con.png');
   } else if (party === "Green Party") {
-    img = GreenBill;
+    img = require('../assets/bill_green.png');
   } else if (party === "Bloc Québecois") {
-    img = BlocBill;
+    img = require('../assets/bill_bloc.png');
   } else {
-    img = DefaultBill;
+    img = require('../assets/bill.png');
   }
+
+  console.log("Bill info:  ", billInfo[0].LongTitle);
 
   const recentVotes = houseVoteDetails.slice(3).map(vote => {
     return {
       billNumber: billNumber,
       image: img,
       party: party,
+      sponsorName: billInfo[0].SponsorPersonName,
       voteStage: vote.DivisionSubjectEn,
       voteStatus: vote.DecisionResultNameEn,
       votesYes: vote.DivisionVotesYeas,
       votesNo: vote.DivisionVotesNays,
-      date: vote.DecisionDateTime
+      date: vote.DecisionDateTime,
+      description: billInfo[0].LongTitle
     };
   });
 

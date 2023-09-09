@@ -16,10 +16,9 @@ const BillInfoCardScreen = ({ route, navigation }) => {
       try {
         const billDetails = await ParsingService.getDetailedBillVotes(billNumber);
         setBillDetails(billDetails);  
-/*         console.log("Bill image: ", billDetails.image);
-        console.log("Bill name: ", billDetails.name);
-        console.log("Bill party: ", billDetails.party);
-        console.log("Bill description: ", billDetails.description); */
+        console.log("Bill details:", billDetails[0]);
+        //console.log("Bill image: ", billDetails[0].image);
+        //console.log("Party: ", billDetails[0].party);
       } catch (error) {
         console.log('bill info card screen error: ', error);
       }
@@ -33,10 +32,11 @@ const BillInfoCardScreen = ({ route, navigation }) => {
       <View style={styles.topContainer}>
         {billDetails && (
           <BillInfoCardTop
-            image={billDetails.image}
-            name={billDetails.name}
-            party={billDetails.party}
-            description={billDetails.description}
+            image={billDetails[0].image}
+            billNumber={billDetails[0].billNumber}
+            sponsorName={billDetails[0].sponsorName}
+            party={billDetails[0].party}
+            description={billDetails[0].description}
           />
         )}
       </View>
@@ -52,12 +52,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   topContainer: {
-    flex: 1,
-    marginHorizontal: 20,
-    marginVertical: 10,
+    flex: 0.55, // Take up a bit more than half of the vertical space
+    alignItems: 'center', // Center content horizontally
+    justifyContent: 'center', // Center content vertically
   },
   bottomContainer: {
-    flex: 2,
+    flex: 1, // Take up the remaining space
     marginHorizontal: 20,
     marginBottom: 10,
   },
