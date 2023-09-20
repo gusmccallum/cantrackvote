@@ -71,6 +71,50 @@ function getBillsByIssue(issueName) {
     });
 }
 
+async function getMpImage(MPName) {
+  try {
+    // Read the MPList.json file
+    const mpListData = await fs.readFile('../assets/MPList.json', 'utf8');
+    const mpList = JSON.parse(mpListData);
+
+    // Find the MP's ID based on their name
+    let MPID = null;
+    for (const mp of mpList) {
+      if (mp.name === MPName) {
+        MPID = mp.id;
+        break;
+      }
+    }
+
+    if (MPID === null) {
+      throw new Error(`MP not found: ${MPName}`);
+    }
+
+    // Construct the URL
+    const url = `https://www.ourcommons.ca/Members/en/${MPName}(${MPID})`;
+
+    // Fetch the HTML page
+    const response = await axios.get(url);
+
+    // Parse the HTML response to find the image URL
+    const html = response.data;
+    const imageRegex = /<img\s+id="ce-mip-mp-picture"\s+src="([^"]+)"/i;
+    const match = html.match(imageRegex);
+
+    if (match) {
+      const imageUrl = match[1];
+      return imageUrl;
+    } else {
+      throw new Error('Image not found on the page');
+    }
+  } catch (error) {
+    console.error('Error:', error.message);
+    throw error;
+  }
+}
+
+
+
 module.exports = {
   getMpVotes,
   getBillInfo,
