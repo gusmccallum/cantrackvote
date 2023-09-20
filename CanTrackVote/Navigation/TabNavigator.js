@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -17,23 +17,8 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator 
     initialRouteName="ActivityFeed"
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: '#3f7819', // Set header background color
-      },
-      headerTitle: 'CanTrackVote', // Set header title
-      headerTitleStyle: {
-        color: '#FFF', // Set header title color to white
-      },
-      headerTitleAlign: 'center', // Center the header title
-      headerRight: () => (
-        <View>
-          <TouchableOpacity style={{marginLeft:15}}>
-            <MaterialCommunityIcons name='dots-vertical' size={28} color='#000'/>
-          </TouchableOpacity>          
-        </View>
-      )
-    }}>
+    screenOptions={{ headerShown: false }}
+    >
       <Tab.Screen 
         name="ActivityFeedScreen" 
         options={{

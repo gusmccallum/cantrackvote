@@ -1,4 +1,7 @@
 import React from "react";
+import { View } from "react-native";
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createStackNavigator } from "@react-navigation/stack";
 import ActivityFeedScreen from "../Screens/ActivityFeedScreen";
 import MPInfoCardScreen from "../Screens/MPInfoCardScreen";
@@ -14,8 +17,25 @@ const Stack = createStackNavigator();
 
 const StackNavigator = ( { initialScreen } ) => {
   return (
-    <Stack.Navigator options={{ headerShown: false }}
-    initialRouteName={initialScreen}>
+    <Stack.Navigator 
+    initialRouteName={initialScreen} 
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: '#3f7819', // Set header background color
+      },
+      headerTitle: 'CanTrackVote', // Set header title
+      headerTitleStyle: {
+        color: '#FFF', // Set header title color to white
+      },
+      headerTitleAlign: 'center', // Center the header title
+      headerRight: () => (
+        <View>
+          <TouchableOpacity style={{marginLeft:15}}>
+            <MaterialCommunityIcons name='dots-vertical' size={28} color='#000'/>
+          </TouchableOpacity>          
+        </View>
+      )
+    }}>
       <Stack.Screen
         name="ActivityFeed"
         component={ActivityFeedScreen}
