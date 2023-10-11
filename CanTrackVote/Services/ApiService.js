@@ -10,12 +10,11 @@ async function getMpVotes(mpName, mpID) {
 
   try {
     const response = await axios.get(url);
-    let result;
     parseString(response.data, async (err, res) => {
       if (err) {
-        console.log('apiservice error: ', err);
+        console.log('fetch error: ', err);
       } else {
-        result = res;
+        console.log("Res is: ", res);
         const party = res.ArrayOfMemberVote.MemberVote[0].CaucusShortName;
         let partyShort = "";
         switch (String(party)) {
@@ -41,12 +40,12 @@ async function getMpVotes(mpName, mpID) {
             break;
         }
         const imageUrl = `https://www.ourcommons.ca/Content/Parliamentarians/Images/OfficialMPPhotos/44/${lastNameFirstName}_${partyShort}.jpg`;
-        result.image = imageUrl;
+        res.image = imageUrl;
       }
     });
-    return result;
+    return res;
   } catch (error) {
-    console.log('apiservice error: ', error);
+    console.log('whole ting error: ', error);
   }
 }
 
