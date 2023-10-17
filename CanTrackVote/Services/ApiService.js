@@ -10,44 +10,49 @@ async function getMpVotes(mpName, mpID) {
 
   try {
     const response = await axios.get(url);
-    parseString(response.data, async (err, res) => {
-      if (err) {
-        console.log('fetch error: ', err);
-      } else {
-        console.log("Res is: ", res);
-        const party = res.ArrayOfMemberVote.MemberVote[0].CaucusShortName;
-        let partyShort = "";
-        switch (String(party)) {
-          case "Conservative":
-            partyShort = "CPC";
-            break;
-          case "Liberal":
-            partyShort = "Lib";
-            break;
-          case "Bloc Québécois":
-            partyShort = "BQ";
-            break;
-          case "NDP":
-            partyShort = "NDP";
-            break;
-          case "Green Party":
-            partyShort = "GP";
-            break;
-          case "Independent":
-            partyShort = "IND";
-            break;
-          default: console.log('no match for the party title');
-            break;
+    
+    return new Promise((resolve, reject) => {
+      parseString(response.data, (err, res) => {
+        if (err) {
+          console.log('fetch error: ', err);
+          reject(err);
+        } else {
+          console.log("Res is: ", res.ArrayOfMemberVote.MemberVote[0].CaucusShortName);
+          const party = res.ArrayOfMemberVote.MemberVote[0].CaucusShortName;
+          let partyShort = "";
+          switch (String(party)) {
+            case "Conservative":
+              partyShort = "CPC";
+              break;
+            case "Liberal":
+              partyShort = "Lib";
+              break;
+            case "Bloc Québécois":
+              partyShort = "BQ";
+              break;
+            case "NDP":
+              partyShort = "NDP";
+              break;
+            case "Green Party":
+              partyShort = "GP";
+              break;
+            case "Independent":
+              partyShort = "IND";
+              break;
+            default: console.log('no match for the party title');
+          }
+          const imageUrl = `https://www.ourcommons.ca/Content/Parliamentarians/Images/OfficialMPPhotos/44/${lastNameFirstName}_${partyShort}.jpg`;
+          res.image = imageUrl;
+          resolve(res);
         }
-        const imageUrl = `https://www.ourcommons.ca/Content/Parliamentarians/Images/OfficialMPPhotos/44/${lastNameFirstName}_${partyShort}.jpg`;
-        res.image = imageUrl;
-      }
+      });
     });
-    return res;
   } catch (error) {
-    console.log('whole ting error: ', error);
+    console.log('whole thing error: ', error);
+    throw error;
   }
 }
+
 
 
 function getBillInfo(billNumber) {
