@@ -3,31 +3,39 @@ import { StyleSheet, View } from 'react-native';
 import BillInfoCardTop from '../Components/BillInfoCardTop';
 import BillInfoCardBottom from '../Components/BillInfoCardBottom';
 import ParsingService from '../Services/ParsingService';
+import ApiService from '../Services/ApiService'; // Import your ApiService
 
 const BillInfoCardScreen = ({ route, navigation }) => {
   const [billDetails, setBillDetails] = useState(null); // State to hold bill details
+  const [billStages, setBillStages] = useState(null); // State to hold bill information
   const vote = route.params.vote;
 
-   useEffect(() => {
-    
+  useEffect(() => {
     const billNumber = vote.billNumber;
-    
+
     const fetchData = async () => {
       try {
         const billDetails = await ParsingService.getDetailedBillVotes(billNumber);
-        setBillDetails(billDetails);  
-        console.log("Bill details:", billDetails[0]);
-        //console.log("Bill image: ", billDetails[0].image);
-        //console.log("Party: ", billDetails[0].party);
+        setBillDetails(billDetails);
+
+        // Call the ApiService to get bill information
+        const billStages = await ApiService.getBillProgress(billNumber);
+        setBillStages(billStages);
+
+        //console.log("Bill details:", billDetails[0]);
+        //console.log("Bill information:", billInfo);
+
       } catch (error) {
         console.log('bill info card screen error: ', error);
       }
     };
 
     fetchData();
+    console.log("The bill details are: ", billStages);
   }, []);
 
   return (
+    
     <View style={styles.container}>
       <View style={styles.topContainer}>
         {billDetails && (
@@ -41,11 +49,20 @@ const BillInfoCardScreen = ({ route, navigation }) => {
         )}
       </View>
       <View style={styles.bottomContainer}>
-        <BillInfoCardBottom />
+        {billStages && (
+          <BillInfoCardBottom
+            houseBillStages={billStages.houseBillStages}
+            senateBillStages={billStages.senateBillStages}
+            royalAssent={billStages.royalAssent}
+          />
+        )}
       </View>
     </View>
   );
 };
+
+// Rest of your component remains the same
+
 
 const styles = StyleSheet.create({
   container: {

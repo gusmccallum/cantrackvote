@@ -117,10 +117,39 @@ async function getMpImage(MPName) {
   }
 }
 
+async function getBillProgress(billNumber) {
+  try {
+    // Make the API call to retrieve bill information
+    const response = await axios.get(`https://www.parl.ca/legisinfo/en/bill/44-1/c-${billNumber}/json`);
+
+    if (response.status === 200) {
+      const jsonResponse = response.data;
+
+      // Extract the required information
+      const houseBillStages = jsonResponse[0].BillStages.HouseBillStages;
+      const senateBillStages = jsonResponse[0].BillStages.SenateBillStages;
+      const royalAssent = jsonResponse[0].BillStages.RoyalAssent;
+
+      // Create an object with the extracted information
+      const billInfo = {
+        houseBillStages,
+        senateBillStages,
+        royalAssent,
+      };
+
+      return billInfo;
+    } else {
+      throw new Error('Failed to fetch bill information');
+    }
+  } catch (error) {
+    throw new Error(`API request error: ${error.message}`);
+  }
+}
 
 
 module.exports = {
   getMpVotes,
   getBillInfo,
-  getBillsByIssue
+  getBillsByIssue,
+  getBillProgress
 };

@@ -1,31 +1,47 @@
 import React from 'react';
 import { StyleSheet, View, Text, FlatList } from 'react-native';
 
-const BillInfoCardBottom = () => {
-  const pastVotes = [
-    { id: '1', date: 'March 1, 2023', title: 'Consideration in committee', result: 'Completed' },
-    { id: '2', date: 'February 15, 2023', title: '2nd reading and referral to committee', result: 'Completed' },
-    { id: '3', date: 'January 29, 2023', title: 'Introduction and first reading', result: 'Completed' },
-  ];
+const formatDate = (date) => {
+  const options = { year: 'numeric', month: 'short', day: 'numeric' };
+  return new Date(date).toLocaleDateString('en-US', options);
+};
+
+const formatTime = (date) => {
+  return new Date(date).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+};
+
+const BillInfoCardBottom = ({ houseBillStages, senateBillStages, royalAssent }) => {
+  const reversedHouseBillStages = [...houseBillStages].reverse();
+  const reversedSenateBillStages = [...senateBillStages].reverse();
 
   const renderItem = ({ item }) => {
     return (
       <View style={styles.voteContainer}>
-        <Text style={styles.voteTitle}>{item.title}</Text>
-        <Text style={styles.voteDate}>Vote on {item.date}</Text>
-        <Text style={styles.voteResult}>Result: {item.result}</Text>
+        <Text style={styles.voteTitle}>{item.BillStageName}</Text>
+        <View style={styles.dateTimeContainer}>
+          <Text style={styles.voteDate}>Date: {formatDate(item.StateAsOfDate)}</Text>
+          <Text style={styles.voteTime}>Time: {formatTime(item.StateAsOfDate)}</Text>
+        </View>
+        <Text style={styles.voteResult}>Result: {item.StateName}</Text>
       </View>
     );
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Past Votes</Text>
-      <FlatList
-        data={pastVotes}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-      />
+      <Text style={styles.header}>House of Commons Stages</Text>
+      <View style={styles.stagesContainer}>
+        <FlatList
+          data={reversedHouseBillStages}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.BillStageId.toString()}
+        />
+        <FlatList
+          data={reversedSenateBillStages}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.BillStageId.toString()}
+        />
+      </View>
     </View>
   );
 };
@@ -52,13 +68,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
   },
+  dateTimeContainer: {
+    flexDirection: 'column',
+  alignItems: 'flex-start', // Align date and time to the left
+  },
   voteDate: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#555',
-    marginBottom: 5,
+  },
+  voteTime: {
+    fontSize: 12,
+    color: '#555',
   },
   voteResult: {
     fontSize: 14,
+  },
+  stagesContainer: {
+    flexDirection: 'row', // Display FlatLists side by side
   },
 });
 
