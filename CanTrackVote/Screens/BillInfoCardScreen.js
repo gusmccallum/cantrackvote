@@ -31,7 +31,6 @@ const BillInfoCardScreen = ({ route, navigation }) => {
     };
 
     fetchData();
-    console.log("The bill details are: ", billStages);
   }, []);
 
   return (
