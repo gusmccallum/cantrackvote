@@ -38,10 +38,9 @@ const BillInfoCardBottom = ({ houseBillStages, senateBillStages, royalAssent }) 
         <MaterialCommunityIcons name={iconName} size={48} color="#FFF" />
         <Text style={styles.voteTitle}>{item.BillStageName}</Text>
         <View style={styles.dateTimeContainer}>
-          <Text style={styles.voteDate}>Date: {formatDate(item.StateAsOfDate)}</Text>
-          <Text style={styles.voteTime}>Time: {formatTime(item.StateAsOfDate)}</Text>
+          <Text style={styles.voteDate}>{formatDate(item.StateAsOfDate)}</Text>
+          <Text style={styles.voteTime}>{formatTime(item.StateAsOfDate)}</Text>
         </View>
-        <Text style={styles.voteResult}>Result: {item.StateName}</Text>
       </TouchableOpacity>
     );
   };
@@ -53,10 +52,9 @@ const BillInfoCardBottom = ({ houseBillStages, senateBillStages, royalAssent }) 
         <MaterialCommunityIcons name={iconName} size={48} color="#FFF" />
         <Text style={styles.voteTitle}>{item.BillStageName}</Text>
         <View style={styles.dateTimeContainer}>
-          <Text style={styles.voteDate}>Date: {formatDate(item.StateAsOfDate)}</Text>
-          <Text style={styles.voteTime}>Time: {formatTime(item.StateAsOfDate)}</Text>
+          <Text style={styles.voteDate}>{formatDate(item.StateAsOfDate)}</Text>
+          <Text style={styles.voteTime}>{formatTime(item.StateAsOfDate)}</Text>
         </View>
-        <Text style={styles.voteResult}>Result: {item.StateName}</Text>
       </TouchableOpacity>
     );
   };
