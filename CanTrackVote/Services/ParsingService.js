@@ -21,6 +21,8 @@ async function getRecentMpVotes(name, id, number) {
     const date = vote.DecisionEventDateTime;
 
     voteResults.push({
+      mpName: name, // Add MP name
+      mpID: id,     // Add MP ID
       billTitle,
       description,
       memberVote,
@@ -31,6 +33,8 @@ async function getRecentMpVotes(name, id, number) {
   
   return voteResults;
 }
+
+
 
 async function getRecentBillVotes(billNumber, number) {
   const billInfo = await ApiService.getBillInfo(billNumber);
@@ -107,6 +111,27 @@ function getPartyByID(mpID) {
     }
   } return null;
 }
+
+function getMpObject (name, id) {
+  // If both name and id parameters are provided, prioritize matching by id
+  if (id !== undefined) {
+    const mpById = mpList.find((mp) => mp.ID === id);
+    if (mpById) {
+      return mpById;
+    }
+  }
+
+  // If id is not provided or no match by id, try matching by name
+  if (name !== undefined) {
+    const mpByName = mpList.find((mp) => mp.name === name);
+    if (mpByName) {
+      return mpByName;
+    }
+  }
+
+  // If no match is found, return null
+  return null;
+};
 
 
 module.exports = {

@@ -17,6 +17,9 @@ import BillActivityFeedItem from '../Components/BillActivityFeedItem';
 import bill from '../assets/bill.png';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
+//TODO: Replace with locally saved subscriptions
+const mpSubscriptions = MPList.slice(0, 3); // First 3 MPs
+const billSubscriptions = [11, 12, 13]; // Bill numbers 11, 12, 13
  
 const ActivityFeedScreen = ( { navigation } ) => {
 
@@ -27,24 +30,39 @@ const ActivityFeedScreen = ( { navigation } ) => {
   const [showMPActivities, setShowMPActivities] = useState(true);
   const [showBillActivities, setShowBillActivities] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const mpVotes = await ParsingService.getRecentMpVotes(
-          MPList[0].name,
-          MPList[0].ID,
-          10
-        );
-        const billVotes = await ParsingService.getRecentBillVotes(11, 3);
-        setMpActivities(mpVotes);
-        setBillActivities(billVotes);
-      } catch (error) {
-        console.log('activity feed error: ', error);
-      }
-    };
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      // Fetch MP activities for all MP subscriptions
+      const mpActivitiesPromises = mpSubscriptions.map(async (mpSubscription) => {
+        const mpVotes = await ParsingService.getRecentMpVotes(mpSubscription.name, mpSubscription.ID, 10);
+        return mpVotes;
+      });
 
-    fetchData();
-  }, []);
+      // Fetch bill activities for all bill subscriptions
+      const billActivitiesPromises = billSubscriptions.map(async (billNumber) => {
+        const billVotes = await ParsingService.getRecentBillVotes(billNumber, 3);
+        return billVotes;
+      });
+
+      // Wait for all promises to resolve and accumulate the data
+      const mpActivitiesData = await Promise.all(mpActivitiesPromises);
+      const billActivitiesData = await Promise.all(billActivitiesPromises);
+
+      // Concatenate the MP and bill activities data
+      const allMpActivities = mpActivitiesData.flat();
+      const allBillActivities = billActivitiesData.flat();
+
+      setMpActivities(allMpActivities);
+      setBillActivities(allBillActivities);
+    } catch (error) {
+      console.log('activity feed error: ', error);
+    }
+  };
+
+  fetchData();
+}, [mpSubscriptions, billSubscriptions]);
+
 
   useEffect(() => {
     const allActivities = [...mpActivities, ...billActivities];
@@ -52,9 +70,9 @@ const ActivityFeedScreen = ( { navigation } ) => {
     setActivities(allActivities);
   }, [mpActivities, billActivities]);
 
-  const handleMPPress = (vote) => {
-    console.log(vote);
-    navigation.navigate('MPInfoCard', { vote });
+  const handleMPPress = (item) => {
+    console.log("Vote being passed to bill info card: ", item);
+    navigation.navigate('MPInfoCard', { item: item });
   };
 
   const handleBillPress = (vote) => {
@@ -67,7 +85,7 @@ const ActivityFeedScreen = ( { navigation } ) => {
       return (
         <MPActivityFeedItem
           image={item.image}
-          name={MPList[0].name}
+          name={item.mpName}
           billTitle={item.billTitle}
           description={item.description}
           memberVote={item.memberVote}
