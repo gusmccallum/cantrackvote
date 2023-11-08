@@ -71,7 +71,7 @@ useEffect(() => {
   }, [mpActivities, billActivities]);
 
   const handleMPPress = (item) => {
-    console.log("Vote being passed to bill info card: ", item);
+    console.log("Vote being passed to mp info card: ", item);
     navigation.navigate('MPInfoCard', { item: item });
   };
 

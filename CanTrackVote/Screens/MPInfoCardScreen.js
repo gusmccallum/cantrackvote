@@ -3,14 +3,15 @@ import { StyleSheet, View } from 'react-native';
 import MPInfoCardTop from '../Components/MPInfoCardTop';
 import MPInfoCardBottom from '../Components/MPInfoCardBottom';
 
-const MPInfoCardScreen = ({ vote }) => {
+const MPInfoCardScreen = ({ route, navigation }) => {
+  mpInfo = route.params.item;
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
         <MPInfoCardTop
-          imageUri="https://static.wikia.nocookie.net/supermarioglitchy4/images/a/a8/Saul.webp/revision/latest?cb=20220811065029"
-          name="John Smith"
-          party="Liberal Party of Canada"
+          imageUri={mpInfo.image}
+          name={mpInfo.mpName}
+          party={mpInfo.party}
           bio="John Smith is a Member of Parliament representing the riding of Ottawa South."
         />
       </View>
