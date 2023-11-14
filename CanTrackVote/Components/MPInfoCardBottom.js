@@ -1,32 +1,44 @@
+// MPInfoCardVotes.js
+
 import React from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { View, FlatList, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import uuid from 'uuid-random';
 
-const MPInfoCardBottom = () => {
-  const pastVotes = [
-    { id: '1', date: 'March 1, 2023', title: 'Bill C-123: An Act to ...', result: 'Yes' },
-    { id: '2', date: 'February 15, 2023', title: 'Bill C-456: An Act to ...', result: 'No' },
-    { id: '3', date: 'January 29, 2023', title: 'Bill C-789: An Act to ...', result: 'Abstain' },
-    { id: '4', date: 'December 17, 2022', title: 'Bill C-321: An Act to ...', result: 'Yes' },
-    { id: '5', date: 'November 26, 2022', title: 'Bill C-654: An Act to ...', result: 'Yes' },
-  ];
 
-  const renderItem = ({ item }) => {
+const formatDate = (date) => {
+  const options = { year: 'numeric', month: 'short', day: 'numeric' };
+  return new Date(date).toLocaleDateString('en-US', options);
+};
+
+const MPInfoCardBottom = ({ votes }) => {
+  const renderVoteItem = ({ item }) => {
+    let icon = <MaterialCommunityIcons name="checkbox-marked-circle" size={48} color="#3f7819" />;
+
+
+    if (item.memberVote[0] === "Nay") {
+      icon = <MaterialCommunityIcons name="close-circle" size={48} color="red" />;
+    }
+  
     return (
-      <View style={styles.voteContainer}>
-        <Text style={styles.voteTitle}>{item.title}</Text>
-        <Text style={styles.voteDate}>Vote on {item.date}</Text>
-        <Text style={styles.voteResult}>Result: {item.result}</Text>
-      </View>
+      <TouchableOpacity style={styles.voteContainer}>
+        {icon}
+        <Text style={styles.voteTitle}>{item.billTitle}</Text>
+        <View style={styles.dateTimeContainer}>
+          <Text style={styles.voteDate}>{formatDate(item.date)}</Text>
+        </View>
+        <Text style={styles.voteResult}>Vote: {item.memberVote}</Text>
+      </TouchableOpacity>
     );
   };
+  
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Past Votes</Text>
       <FlatList
-        data={pastVotes}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        data={votes}
+        renderItem={renderVoteItem}
+        keyExtractor={() => uuid()}
       />
     </View>
   );
@@ -38,29 +50,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#f2f2f2',
     padding: 10,
   },
-  header: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
   voteContainer: {
-    backgroundColor: '#fff',
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
+    alignItems: 'center',
+    backgroundColor: '#fff',
   },
   voteTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginTop: 10,
+    color: '#3f7819',
+  },
+  dateTimeContainer: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
   voteDate: {
-    fontSize: 14,
-    color: '#555',
-    marginBottom: 5,
+    fontSize: 12,
+    color: '#3f7819',
   },
   voteResult: {
     fontSize: 14,
+    color: '#3f7819',
   },
 });
 

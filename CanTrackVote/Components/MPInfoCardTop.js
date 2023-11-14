@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 150,
+    height: 150, // Adjust the height according to your preference
+    resizeMode: 'contain', // Center the image without stretching
   },
   detailsContainer: {
     flex: 1,

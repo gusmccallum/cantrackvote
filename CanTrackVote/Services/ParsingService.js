@@ -34,6 +34,33 @@ async function getRecentMpVotes(name, id, number) {
   return voteResults;
 }
 
+async function getAllMpVotes(name, id) {
+  const response = await ApiService.getMpVotes(name, id);
+  const memberVotes = response.ArrayOfMemberVote.MemberVote;
+  const voteResults = [];
+
+  for (let i = 0; i < memberVotes.length; i++) {
+    const vote = memberVotes[i];
+    const billTitle = vote.BillNumberCode || vote.DecisionDivisionDocumentTypeName;
+    const description = vote.DecisionDivisionSubject;
+    const memberVote = vote.VoteValueName;
+    const image = response.image;    
+    const date = vote.DecisionEventDateTime;
+
+    voteResults.push({
+      mpName: name, // Add MP name
+      mpID: id,     // Add MP ID
+      billTitle,
+      description,
+      memberVote,
+      image,
+      date
+    });
+  }
+  
+  return voteResults;
+}
+
 
 
 async function getRecentBillVotes(billNumber, number) {
@@ -136,6 +163,7 @@ function getMpObject (name, id) {
 
 module.exports = {
   getRecentMpVotes,
+  getAllMpVotes,
   getRecentBillVotes, 
   getDetailedBillVotes,
   getPartyByName,
