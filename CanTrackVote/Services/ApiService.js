@@ -48,7 +48,8 @@ async function getMpVotes(mpName, mpID) {
       });
     });
   } catch (error) {
-    console.log('whole thing error: ', error);
+    console.log("URL used for API call: ", url);
+    console.log('whole thing error: ', error.toJSON());
     throw error;
   }
 }

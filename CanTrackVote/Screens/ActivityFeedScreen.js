@@ -98,7 +98,7 @@ useEffect(() => {
     } else {
       return (
         <BillActivityFeedItem
-          image={bill}
+          image={item.image}
           billNumber={item.billNumber}
           voteStage={item.voteStage}
           voteStatus={item.voteStatus}

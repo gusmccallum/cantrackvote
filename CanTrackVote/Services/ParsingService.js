@@ -66,10 +66,28 @@ async function getAllMpVotes(name, id) {
 async function getRecentBillVotes(billNumber, number) {
   const billInfo = await ApiService.getBillInfo(billNumber);
   const houseVoteDetails = billInfo[0].HouseVoteDetails;
+  const party = getPartyByName(billInfo[0].SponsorPersonName);
+
+  let billImg;
+
+  if (party === "Liberal") {
+    billImg = LibBill;
+  } else if (party === "NDP") {
+    billImg = NDPBill;
+  } else if (party === "Conservative") {
+    billImg = ConBill;
+  } else if (party === "Green Party") {
+    billImg = GreenBill;
+  } else if (party === "Bloc Québecois") {
+    billImg = BlocBill;
+  } else {
+    billImg = DefaultBill;
+  }
 
   const recentVotes = houseVoteDetails.slice(-number).map(vote => {
     return {
       billNumber: billNumber,
+      image: billImg,
       voteStage: vote.DivisionSubjectEn,
       voteStatus: vote.DecisionResultNameEn,
       votesYes: vote.DivisionVotesYeas,
@@ -87,28 +105,42 @@ async function getDetailedBillVotes(billNumber) {
     const party = getPartyByName(billInfo[0].SponsorPersonName);
   
 
-  let img;
+  let billImg;
+
+  // if (party === "Liberal") {
+    
+  //   img = require('../assets/bill_lib.png');
+  // } else if (party === "NDP") {
+  //   img = require('../assets/bill_ndp.png');
+  // } else if (party === "Conservative") {
+  //   img = require('../assets/bill_con.png');
+  // } else if (party === "Green Party") {
+  //   img = require('../assets/bill_green.png');
+  // } else if (party === "Bloc Québecois") {
+  //   img = require('../assets/bill_bloc.png');
+  // } else {
+  //   img = require('../assets/bill.png');
+  // }\\
+
 
   if (party === "Liberal") {
-    img = require('../assets/bill_lib.png');
+    billImg = LibBill;
   } else if (party === "NDP") {
-    img = require('../assets/bill_ndp.png');
+    billImg = NDPBill;
   } else if (party === "Conservative") {
-    img = require('../assets/bill_con.png');
+    billImg = ConBill;
   } else if (party === "Green Party") {
-    img = require('../assets/bill_green.png');
+    billImg = GreenBill;
   } else if (party === "Bloc Québecois") {
-    img = require('../assets/bill_bloc.png');
+    billImg = BlocBill;
   } else {
-    img = require('../assets/bill.png');
+    billImg = DefaultBill;
   }
-
-  console.log("Bill info:  ", billInfo[0].LongTitle);
 
   const recentVotes = houseVoteDetails.slice(3).map(vote => {
     return {
       billNumber: billNumber,
-      image: img,
+      image: billImg,
       party: party,
       sponsorName: billInfo[0].SponsorPersonName,
       voteStage: vote.DivisionSubjectEn,
